@@ -1,5 +1,8 @@
 const constants = (function(){
 	return {
+		// constant for turning on development stuff
+		isDev: true,
+		// -----------------------------------------
 		healthBarConfig: {
 			borderColor: 'black',
 			borderWidth: 2,
