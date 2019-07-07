@@ -23,4 +23,17 @@
 		lastTimestamp = timestamp
 		window.requestAnimationFrame(requestAnimationFrameCallback)
 	}
+
+	if(constants.isDev) {
+		const startView = document.getElementById('start-view')
+		startView.setAttribute('hidden', true)
+		canvas.removeAttribute('hidden')
+		stateChangers.startGame('test')
+
+		Object.assign(canvas.style, {
+			borderStyle: 'solid',
+			borderColor: 'black',
+			borderWidth: '1px'
+		})
+	}
 })()
