@@ -8,10 +8,19 @@
 		throw 'context was not found'
 	}
 
-	function requestAnimationFrameCallback(timestamp) {
-		render(timestamp, context)
+	let lastTimestamp = null
+
+	window.requestAnimationFrame(firstRequestAnimationFrameCallback)
+
+	function firstRequestAnimationFrameCallback(timestamp) {
+		render(0, context)
+		lastTimestamp = timestamp
 		window.requestAnimationFrame(requestAnimationFrameCallback)
 	}
 
-	window.requestAnimationFrame(requestAnimationFrameCallback)
+	function requestAnimationFrameCallback(timestamp) {
+		render(timestamp - lastTimestamp, context)
+		lastTimestamp = timestamp
+		window.requestAnimationFrame(requestAnimationFrameCallback)
+	}
 })()
