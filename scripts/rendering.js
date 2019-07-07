@@ -1,0 +1,2 @@
+const render = function(timestamp) {
+}
