@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<style>
+			body {
+				height: 100vh;
+				margin: 0;
+				display: grid;
+			}
+			#canvas {
+				margin: auto;
+			}
+			#start-view {
+				margin: auto;
+				padding: 20px 40px;
+			}
+			#start-view * {
+				margin: 10px auto;
+			}
+			#name, #start-button {
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="card" id="start-view">
+			<input class="form-control" id="name" placeholder="Enter your name">
+			<button class="btn btn-success" id="start-button" disabled>Start</button>
+		</div>
+		<canvas id="canvas" width="1000" height="800" hidden></canvas>
+		<script src="./scripts/constants.js"></script>
+		<script src="./scripts/state-initialization.js"></script>
+		<script src="./scripts/state-changers.js"></script>
+		<script src="./scripts/input-initialization.js"></script>
+		<script src="./scripts/rendering.js"></script>
+		<script src="./scripts/core.js"></script>
+		<script src="./scripts/start-view-scripts.js"></script>
+	</body>
+</html>

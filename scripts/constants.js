@@ -1,0 +1,4 @@
+const constants = (function(){
+	return {
+	}
+})()
