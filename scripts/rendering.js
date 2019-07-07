@@ -1,2 +1,4 @@
-const render = function(timestamp) {
-}
+const render = (function(){
+	return function(diff, context) {
+	}
+})()
