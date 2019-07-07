@@ -1,0 +1,22 @@
+body {
+	height: 100vh;
+	margin: 0;
+	display: grid;
+}
+
+#canvas {
+	margin: auto;
+}
+
+#start-view {
+	margin: auto;
+	padding: 20px 40px;
+}
+
+#start-view * {
+	margin: 10px auto;
+}
+
+#name, #start-button {
+	display: block;
+}
