@@ -2,7 +2,7 @@ const render = (function(){
 	const clearAll = context => context.clearRect(0, 0, context.canvas.width, context.canvas.height)
 
 	function renderScore(context, fontSize) {
-		context.fillStyle = 'black'
+		context.fillStyle = 'white'
 		context.font = `${fontSize}px sans-serif`
 		context.fillText(`Score: ${state.score}`, 10, 10 + fontSize)
 	}
