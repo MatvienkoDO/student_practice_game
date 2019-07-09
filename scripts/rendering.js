@@ -50,7 +50,9 @@ const render = (function(){
 	const background = new Image();
 	background.src = 'pictures/full-background.png';
 	function drawBackground(context) {
-		context.drawImage(background, 0, 0, background.width, background.height, 0, 0, 1280, 720);
+		context.drawImage(background,
+			0, 0, background.width, background.height,
+			0, 0, constants.canvas.width, constants.canvas.height);
 	}
 
 	return function(diff, context) {

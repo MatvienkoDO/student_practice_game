@@ -26,6 +26,10 @@ const constants = (function(){
 			},
 			width: 154,
 			height: 14
+		},
+		canvas: {
+			width: 1280,
+			height: 720
 		}
 	}
 })()

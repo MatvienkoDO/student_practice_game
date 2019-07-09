@@ -3,6 +3,9 @@
 	if(!canvas) {
 		throw 'canvas was not found'
 	}
+	canvas.setAttribute('width', constants.canvas.width)
+	canvas.setAttribute('height', constants.canvas.height)
+
 	const context = canvas.getContext('2d')
 	if(!context) {
 		throw 'context was not found'
