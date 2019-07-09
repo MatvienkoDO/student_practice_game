@@ -65,8 +65,18 @@ const render = (function(){
 		character.idle.push(frame)
 	}
 
+	function renderCharacter(context) {
+		const frameNumber = state.characterFrameNumber % character[state.characterAnimation].length
+		const frame = character[state.characterAnimation][frameNumber]
+
+		// todo: do some calculations and logic about position and size
+		context.drawImage(frame, 0, 0, frame.width, frame.height,
+			state.playerPos.x, state.playerPos.y, 150, 200)
+	}
+
 	return function(diff, context) {
 		renderBackground(context)
+		renderCharacter(context)
 		renderScore(context, 30)
 		renderHealth(context)
 		renderMana(context)
