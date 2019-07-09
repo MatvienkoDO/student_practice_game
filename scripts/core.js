@@ -3,6 +3,9 @@
 	if(!canvas) {
 		throw 'canvas was not found'
 	}
+	canvas.setAttribute('width', constants.canvas.width)
+	canvas.setAttribute('height', constants.canvas.height)
+
 	const context = canvas.getContext('2d')
 	if(!context) {
 		throw 'context was not found'
@@ -29,11 +32,5 @@
 		startView.setAttribute('hidden', true)
 		canvas.removeAttribute('hidden')
 		stateChangers.startGame('test')
-
-		Object.assign(canvas.style, {
-			borderStyle: 'solid',
-			borderColor: 'black',
-			borderWidth: '1px'
-		})
 	}
 })()

@@ -1,6 +1,4 @@
 const render = (function(){
-	const clearAll = context => context.clearRect(0, 0, context.canvas.width, context.canvas.height)
-
 	function renderScore(context, fontSize) {
 		context.fillStyle = 'white'
 		context.font = `${fontSize}px sans-serif`
@@ -48,16 +46,37 @@ const render = (function(){
 		context.fillRect(mnBarPos.x + mnBordW, mnBarPos.y + mnBordW,
 			mnWidth, mnBarConf.height - 2 * mnBordW)
 	}
-	background = new Image();  // "Создаём" изображение
-       	background.src = 'pictures/Full-Background.png';  // Источник изображения
-      	function drawBackground(context) {  // Событие onLoad, ждём момента пока загрузится изображение
-       		context.drawImage( background, 0, 0);  // Рисуем изображение от точки с координатами 0, 0
-      	}
 
+	const background = new Image()
+	background.src = 'pictures/full-background.png'
+	function renderBackground(context) {
+		context.drawImage(background,
+			0, 0, background.width, background.height,
+			0, 0, constants.canvas.width, constants.canvas.height)
+	}
+
+	const character = {
+		idle: []
+	}
+
+	for(let i = 2; i <= 18; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/character/idle/idle00${i < 10 ? '0' : ''}${i}.png`
+		character.idle.push(frame)
+	}
+
+	function renderCharacter(context) {
+		const frameNumber = state.characterFrameNumber % character[state.characterAnimation].length
+		const frame = character[state.characterAnimation][frameNumber]
+
+		// todo: do some calculations and logic about position and size
+		context.drawImage(frame, 0, 0, frame.width, frame.height,
+			state.playerPos.x, state.playerPos.y, 150, 200)
+	}
 
 	return function(diff, context) {
-		clearAll(context)
-		drawBackground(context)
+		renderBackground(context)
+		renderCharacter(context)
 		renderScore(context, 30)
 		renderHealth(context)
 		renderMana(context)
