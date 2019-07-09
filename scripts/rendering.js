@@ -49,14 +49,14 @@ const render = (function(){
 
 	const background = new Image();
 	background.src = 'pictures/full-background.png';
-	function drawBackground(context) {
+	function renderBackground(context) {
 		context.drawImage(background,
 			0, 0, background.width, background.height,
 			0, 0, constants.canvas.width, constants.canvas.height);
 	}
 
 	return function(diff, context) {
-		drawBackground(context)
+		renderBackground(context)
 		renderScore(context, 30)
 		renderHealth(context)
 		renderMana(context)
