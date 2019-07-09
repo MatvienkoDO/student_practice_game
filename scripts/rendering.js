@@ -47,12 +47,12 @@ const render = (function(){
 			mnWidth, mnBarConf.height - 2 * mnBordW)
 	}
 
-	const background = new Image();
-	background.src = 'pictures/full-background.png';
+	const background = new Image()
+	background.src = 'pictures/full-background.png'
 	function renderBackground(context) {
 		context.drawImage(background,
 			0, 0, background.width, background.height,
-			0, 0, constants.canvas.width, constants.canvas.height);
+			0, 0, constants.canvas.width, constants.canvas.height)
 	}
 
 	return function(diff, context) {
