@@ -29,11 +29,5 @@
 		startView.setAttribute('hidden', true)
 		canvas.removeAttribute('hidden')
 		stateChangers.startGame('test')
-
-		Object.assign(canvas.style, {
-			borderStyle: 'solid',
-			borderColor: 'black',
-			borderWidth: '1px'
-		})
 	}
 })()
