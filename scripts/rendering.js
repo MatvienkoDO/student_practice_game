@@ -48,9 +48,16 @@ const render = (function(){
 		context.fillRect(mnBarPos.x + mnBordW, mnBarPos.y + mnBordW,
 			mnWidth, mnBarConf.height - 2 * mnBordW)
 	}
+	background = new Image();  // "Создаём" изображение
+       	background.src = 'pictures/Full-Background.png';  // Источник изображения
+      	function drawBackground(context) {  // Событие onLoad, ждём момента пока загрузится изображение
+       		context.drawImage( background, 0, 0);  // Рисуем изображение от точки с координатами 0, 0
+      	}
+
 
 	return function(diff, context) {
 		clearAll(context)
+		drawBackground(context)
 		renderScore(context, 30)
 		renderHealth(context)
 		renderMana(context)
