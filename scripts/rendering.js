@@ -55,6 +55,16 @@ const render = (function(){
 			0, 0, constants.canvas.width, constants.canvas.height)
 	}
 
+	const character = {
+		idle: []
+	}
+
+	for(let i = 2; i <= 18; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/character/idle/idle00${i < 10 ? '0' : ''}${i}.png`
+		character.idle.push(frame)
+	}
+
 	return function(diff, context) {
 		renderBackground(context)
 		renderScore(context, 30)
