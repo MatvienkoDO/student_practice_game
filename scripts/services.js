@@ -1,3 +1,3 @@
 (function(){
-	setInterval(stateChangers.changePlayerFrame, 200)
+	setInterval(stateChangers.changePlayerFrame, 50)
 })()
