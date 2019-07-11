@@ -7,6 +7,9 @@ const state = (function(){
 		startTime: null,
 		playerPos: { x: 0, y: 0 },
 		characterFrameNumber: 0,
-		characterAnimation: 'idle'
+		characterAnimation: 'idle',
+		enemyPos:{ x: 1000, y: 390 },
+		skeletonFrameNumber: 0,
+		skeletonAnimation: 'walk'
 	}
 })()
