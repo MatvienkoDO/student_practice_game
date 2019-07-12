@@ -56,14 +56,23 @@ const render = (function(){
 	}
 
 	const character = {
-		idle: []
+		idle: [],
+		run: []
 	}
 
-	for(let i = 2; i <= 18; ++i) {
+	for(let i = 1; i <= 17; ++i) {
 		const frame = new Image()
 		frame.src = `pictures/character/idle/idle00${i < 10 ? '0' : ''}${i}.png`
 		character.idle.push(frame)
 	}
+
+
+	for(let i = 1; i <= 17; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/character/run/run00${i < 10 ? '0' : ''}${i}.png`
+		character.run.push(frame)
+	}
+
 
 	function renderCharacter(context) {
 		const frameNumber = state.characterFrameNumber % character[state.characterAnimation].length
@@ -71,12 +80,32 @@ const render = (function(){
 
 		// todo: do some calculations and logic about position and size
 		context.drawImage(frame, 0, 0, frame.width, frame.height,
-			state.playerPos.x, state.playerPos.y, 150, 200)
+			state.playerPos.x, state.playerPos.y, 175, 200)
+	}		
+
+	const enemy = {
+		walk: []
+	}
+
+	for(let i = 4; i <= 23; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/enemy/walk/FW_Skeleton_Walking__0${i < 10 ? '0' : ''}${i}.png`
+		enemy.walk.push(frame)
+	}
+
+	function renderEnemy(context) {
+		const frameNumber = state.skeletonFrameNumber % enemy[state.skeletonAnimation].length
+		const frame =  enemy[state.skeletonAnimation][frameNumber]
+
+		// todo: do some calculations and logic about position and size
+		context.drawImage(frame, 0, 0, frame.width, frame.height,
+			state.enemyPos.x, state.enemyPos.y, 150, 200)
 	}
 
 	return function(diff, context) {
 		renderBackground(context)
 		renderCharacter(context)
+		renderEnemy(context)
 		renderScore(context, 30)
 		renderHealth(context)
 		renderMana(context)

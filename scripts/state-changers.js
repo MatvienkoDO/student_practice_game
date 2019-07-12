@@ -9,9 +9,15 @@ const stateChangers = (function(){
 			state.mana = 100
 			state.startTime = new Date()
 			state.playerPos = { x: 10, y: 390 } // todo: temporary
+			state.playerSpeed = 10;
+
 		},
 		changePlayerFrame: () => {
 			state.characterFrameNumber = (state.characterFrameNumber + 1) % highBoundary
-		}
+		},
+		changeEnemyFrame: () => {
+			state.skeletonFrameNumber = (state.skeletonFrameNumber + 1) % highBoundary
+		},
+		
 	}
 })()
