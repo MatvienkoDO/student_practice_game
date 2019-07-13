@@ -1,4 +1,27 @@
 (function(){
+	function onPlayerHoldKey(keyCode, callback) {
+		let last = null
+		const callbackWrapper = () => {
+			const now = new Date().getTime()
+			if(last) {
+				callback(Math.min(now - last, 75))
+			} else {
+				callback(30) //some average value to reduce input lag
+			}
+			last = now
+		}
+		window.addEventListener('keydown', e => {
+			if(e.keyCode === keyCode) {
+				callbackWrapper()
+			}
+		})
+		window.addEventListener('keyup', e => {
+			if(e.keyCode === keyCode) {
+				last = null
+			}
+		})
+	}
+	//onPlayerHoldKey(constants.rightButton, console.log) // testing example
   function playerMovement(e){
 	switch(e.keyCode){
 		case 37:
