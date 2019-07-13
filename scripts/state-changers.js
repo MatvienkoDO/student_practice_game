@@ -10,6 +10,7 @@ const stateChangers = (function(){
 			state.health = 100
 			state.mana = 100
 			state.startTime = new Date()
+			playerTurnedTo: 'right'
 			state.playerPos = { x: 10, y: 390 } // todo: temporary
 			state.playerSpeed = 0;
 
@@ -20,6 +21,9 @@ const stateChangers = (function(){
 		changeEnemyFrame: () => {
 			state.skeletonFrameNumber = (state.skeletonFrameNumber + 1) % highBoundary
 		},
+		changeBulletFrame: () => {
+			state.bulletFrameNumber = (state.bulletFrameNumber + 1) % highBoundary
+		},	
 		playerMovement: diff => {
 			state.playerPos.x += diff * state.playerSpeed
 			if(Math.abs(state.playerSpeed) < 1 && state.characterAnimation === 'run') {
