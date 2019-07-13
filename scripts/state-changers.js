@@ -21,10 +21,13 @@ const stateChangers = (function(){
 			state.skeletonFrameNumber = (state.skeletonFrameNumber + 1) % highBoundary
 		},
 		playerMovement: diff => {
-			state.playerPos.x += diff * state.playerSpeed
-			if(Math.abs(state.playerSpeed) < 1 && state.characterAnimation === 'run') {
+			state.playerPos.x = Math.max(0, Math.min(state.playerPos.x + diff * state.playerSpeed, 1180))
+
+			const absSpeed = Math.abs(state.playerSpeed)
+			if(absSpeed < 1 && state.characterAnimation === 'run') {
 				state.characterAnimation = 'idle'
-			} else if(state.characterAnimation === 'idle') {
+			}
+			if(absSpeed >= 1 && state.characterAnimation === 'idle') {
 				state.characterAnimation = 'run'
 			}
 		},
