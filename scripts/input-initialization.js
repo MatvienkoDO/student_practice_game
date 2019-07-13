@@ -22,6 +22,22 @@
 		})
 	}
 	//onPlayerHoldKey(constants.rightButton, console.log) // testing example
+
+	window.addEventListener('keydown', e => {
+		if(e.keyCode === constants.rightButton) {
+			stateChangers.movePlayerRight()
+		} else if(e.keyCode === constants.leftButton) {
+			stateChangers.movePlayerLeft()
+		}
+	})
+
+	window.addEventListener('keyup', e => {
+		if(e.keyCode === constants.rightButton || e.keyCode === constants.leftButton) {
+			stateChangers.slowDownPlayer()
+		}
+	})
+
+	/*
   function playerMovement(e){
 	switch(e.keyCode){
 		case 37:
@@ -42,4 +58,5 @@
 	})
 }
 addEventListener("keydown", playerMovement);
+*/
 })()
