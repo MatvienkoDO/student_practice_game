@@ -30,6 +30,10 @@ const constants = (function(){
 		canvas: {
 			width: 1280,
 			height: 720
-		}
+		},
+		rightButton: 39,
+		leftButton: 37,
+		upButton: 38,
+		downButton: 40
 	}
 })()
