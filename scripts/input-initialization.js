@@ -39,24 +39,45 @@
 
 	/*
   function playerMovement(e){
-	switch(e.keyCode){
-		case 37:
-			if(state.playerPos.x > 0){
-				state.playerPos.x -= state.playerSpeed;
-				state.characterAnimation = 'run';
-				break;}
-			else if(state.playerPos.x == 0) break;
-		case 39:
-		   if(state.playerPos.x < 1180){
-				state.playerPos.x += state.playerSpeed;
-				state.characterAnimation = 'run';
-			break;
-		}
-	}
-	$(document).keyup(function (e){
-	state.characterAnimation = 'idle';
-	})
-}
-addEventListener("keydown", playerMovement);
+        switch(e.keyCode){
+            case 37:
+                if(state.playerPos.x > 0){
+                    state.playerPos.x -= state.playerSpeed;
+                    state.playerTurnedTo = 'left';
+                    state.characterAnimation = 'runleft';
+                    break;
+                }
+                else if(state.playerPos.x == 0) break;
+            case 39: 
+               if(state.playerPos.x < 1180){ 
+                    state.playerPos.x += state.playerSpeed;
+                    state.playerTurnedTo = 'right';
+                    state.characterAnimation = 'run';
+                break;
+            }
+            case 49:
+                playerAttack();
+                break;
+            case 50:
+            if(state.mana > 0){
+                playerAttack();
+                state.mana -= 10; 
+                break;
+            }
+            else if(state.mana == 0) break;
+        }
+        $(document).keyup(function (e){ 
+            if(state.playerTurnedTo =='left') state.characterAnimation = 'idleleft';
+            else state.characterAnimation = 'idle';
+        }) 
+    }
+
+    addEventListener("keydown", playerMovement);
+
+    function playerAttack(){
+        if(state.playerTurnedTo =='left') state.characterAnimation='attackleft';
+            else state.characterAnimation ='attack';
+        state.bulletPos = state.playerPos;
+    }
 */
 })()
