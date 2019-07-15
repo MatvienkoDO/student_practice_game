@@ -29,6 +29,12 @@
 		} else if(e.keyCode === constants.leftButton) {
 			stateChangers.movePlayerLeft()
 		}
+		if(e.keyCode === constants.attackOneButton){
+			stateChangers.playerAttack()
+		}
+		if(e.keyCode === constants.attackTwoButton){
+			stateChangers.playerAttack()
+		}
 	})
 
 	window.addEventListener('keyup', e => {
