@@ -57,7 +57,11 @@ const render = (function(){
 
 	const character = {
 		idle: [],
-		run: []
+		run: [],
+		idleleft: [],
+		runleft: [],
+		attack: [],
+		attackleft: []
 	}
 
 	for(let i = 1; i <= 17; ++i) {
@@ -73,24 +77,70 @@ const render = (function(){
 		character.run.push(frame)
 	}
 
+	for(let i = 1; i <= 17; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/characterleft/idle/idle00${i < 10 ? '0' : ''}${i}.png`
+		character.idleleft.push(frame)
+	}
+
+	for(let i = 1; i <= 17; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/characterleft/run/run00${i < 10 ? '0' : ''}${i}.png`
+		character.runleft.push(frame)
+	}
+
+	for(let i = 13; i <= 19; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/character/attack/attack100${i < 10 ? '0' : ''}${i}.png`
+		character.attack.push(frame)
+	}
+
+	for(let i = 13; i <= 19; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/characterleft/attack/attack100${i < 10 ? '0' : ''}${i}.png`
+		character.attackleft.push(frame)
+	}
+
 
 	function renderCharacter(context) {
 		const frameNumber = state.characterFrameNumber % character[state.characterAnimation].length
 		const frame = character[state.characterAnimation][frameNumber]
 
 		// todo: do some calculations and logic about position and size
-		context.drawImage(frame, 0, 0, frame.width, frame.height,
-			state.playerPos.x, state.playerPos.y, 175, 200)
-	}		
+		if (state.characterAnimation=='attack') context.drawImage(frame, 0, 0, frame.width, frame.height,
+			state.playerPos.x, state.playerPos.y, 250, 196);
+		else if (state.characterAnimation=='attackleft') context.drawImage(frame, 0, 0, frame.width, frame.height,
+			state.playerPos.x-68, state.playerPos.y, 250, 196);
+		else context.drawImage(frame, 0, 0, frame.width, frame.height,
+			state.playerPos.x, state.playerPos.y, 175, 200);
+	}			
 
 	const enemy = {
-		walk: []
+		walk: [],
+		attack: [],
+		walkright: [],
+		attackright: []
 	}
 
 	for(let i = 4; i <= 23; ++i) {
 		const frame = new Image()
 		frame.src = `pictures/enemy/walk/FW_Skeleton_Walking__0${i < 10 ? '0' : ''}${i}.png`
 		enemy.walk.push(frame)
+	}
+	for(let i = 0; i <= 19; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/enemy/attack/FW_Skeleton_Attack__0${i < 10 ? '0' : ''}${i}.png`
+		enemy.attack.push(frame)
+	}
+	for(let i = 4; i <= 23; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/enemyleft/walkright/FW_Skeleton_Walking__0${i < 10 ? '0' : ''}${i}.png`
+		enemy.walkright.push(frame)
+	}
+	for(let i = 0; i <= 19; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/enemyleft/attackright/FW_Skeleton_Attack__0${i < 10 ? '0' : ''}${i}.png`
+		enemy.attackright.push(frame)
 	}
 
 	function renderEnemy(context) {
@@ -99,12 +149,51 @@ const render = (function(){
 
 		// todo: do some calculations and logic about position and size
 		context.drawImage(frame, 0, 0, frame.width, frame.height,
-			state.enemyPos.x, state.enemyPos.y, 150, 200)
+			state.skeletonPos.x, state.skeletonPos.y, 180, 230)
+	}
+	const bullet = {
+		fire: [],
+		water: [],
+		fireleft: [],
+		waterleft: []
+	}
+
+	for(let i = 1; i <= 8; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/effects/water/water${i}.png`
+		bullet.water.push(frame)
+	}
+
+	for(let i = 1; i <= 8; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/effects/fire/fire${i}.png`
+		bullet.fire.push(frame)
+	}
+
+	for(let i = 1; i <= 8; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/effectsleft/water/water${i}.png`
+		bullet.water.push(frame)
+	}
+
+	for(let i = 1; i <= 8; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/effectsleft/fire/fire${i}.png`
+		bullet.fire.push(frame)
+	}
+
+	function renderBullet(context) {
+		const frameNumber = state.bulletFrameNumber % bullet[state.bulletAnimation].length
+		const frame =  bullet[state.bulletAnimation][frameNumber]
+		// todo: do some calculations and logic about position and size
+		context.drawImage(frame, 0, 0, frame.width, frame.height,
+			state.bulletPos.x, state.bulletPos.y, 70, 70)
 	}
 
 	return function(diff, context) {
 		renderBackground(context)
 		renderCharacter(context)
+		renderBullet(context)
 		renderEnemy(context)
 		renderScore(context, 30)
 		renderHealth(context)
