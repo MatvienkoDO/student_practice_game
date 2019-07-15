@@ -34,6 +34,8 @@ const constants = (function(){
 		rightButton: 39,
 		leftButton: 37,
 		upButton: 38,
-		downButton: 40
+		downButton: 40,
+		attackOneButton: 49,
+		attackTwoButton: 50,
 	}
 })()

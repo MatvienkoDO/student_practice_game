@@ -9,8 +9,11 @@ const state = (function(){
 		playerSpeed: 0,
 		characterFrameNumber: 0,
 		characterAnimation: 'idle',
-		enemyPos:{ x: 1000, y: 390 },
+		skeletonPos:{ x: 1000, y: 380 },
 		skeletonFrameNumber: 0,
-		skeletonAnimation: 'walk'
+		skeletonAnimation: 'walk',
+		bulletPos:{ x: 1000, y: 390 },
+		bulletFrameNumber: 0,
+		bulletAnimation: 'fire'
 	}
 })()
