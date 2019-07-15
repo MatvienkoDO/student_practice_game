@@ -8,8 +8,12 @@
 		stateChangers.skeletonMovement()
 		
 	}
-	setInterval(stateChangers.skeletonDamageDealing, 1000)
 	setInterval(movementCallback, movementInterval)
-	setInterval(stateChangers.healthRegeneration, 1000)
-	setInterval(stateChangers.manaRegeneration, 1000)
+
+	const combinedCallbacks = () => {
+		stateChangers.skeletonDamageDealing()
+		stateChangers.healthRegeneration()
+		stateChangers.manaRegeneration()
+	}
+	setInterval(combinedCallbacks, 1000)
 })()

@@ -62,33 +62,34 @@ const stateChangers = (function(){
 				state.characterAnimation = 'attackleft'
 			}
 			setTimeout(stateChangers.calmDownPlayer,700)
-			render.renderBullet(context)
 		},
 
-		skeletonMovement: () => {
+		skeletonMovement: (diff) => {
 			if(state.skeletonPos.x > state.playerPos.x){ 
 				state.skeletonPos.x -= 1;
-			if(state.skeletonAnimation === 'attack') {
-				state.skeletonAnimation = 'walk'
-			}
-			if(state.skeletonAnimation === 'walkright') {
-				state.skeletonAnimation = 'walk'
-			}
-			if(state.skeletonAnimation === 'attackright') {
-				state.skeletonAnimation = 'walk'
-			}
+
+				if(state.skeletonAnimation === 'attack') {
+					state.skeletonAnimation = 'walk'
+				}
+				if(state.skeletonAnimation === 'walkright') {
+					state.skeletonAnimation = 'walk'
+				}
+				if(state.skeletonAnimation === 'attackright') {
+					state.skeletonAnimation = 'walk'
+				}
 			}
 			if(state.skeletonPos.x < state.playerPos.x){ 	
 				state.skeletonPos.x += 1;
-			if(state.skeletonAnimation === 'walk') {
-				state.skeletonAnimation = 'walkright'
-			}
-			if(state.skeletonAnimation === 'attackright') {
-				state.skeletonAnimation = 'walkright'
-			}
-			if(state.skeletonAnimation === 'attack') {
-				state.skeletonAnimation = 'walkright'
-			}
+
+				if(state.skeletonAnimation === 'walk') {
+					state.skeletonAnimation = 'walkright'
+				}
+				if(state.skeletonAnimation === 'attackright') {
+					state.skeletonAnimation = 'walkright'
+				}
+				if(state.skeletonAnimation === 'attack') {
+					state.skeletonAnimation = 'walkright'
+				}
 			}
 			if(state.skeletonPos.x === state.playerPos.x && state.skeletonAnimation === 'walk') {
 				state.skeletonAnimation = 'attack'
