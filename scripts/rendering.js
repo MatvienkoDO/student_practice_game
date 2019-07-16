@@ -43,7 +43,7 @@ const render = (function(){
 		context.fillStyle = mnBarConf.manaColor
 
 		const mana = Math.max(0, Math.min(state.mana, 100))
-		const mnWidth = (mnBarConf.width - 2 * mnBordW) * (state.mana / 100)
+		const mnWidth = (mnBarConf.width - 2 * mnBordW) * (mana / 100)
 
 		context.fillRect(mnBarPos.x + mnBordW, mnBarPos.y + mnBordW,
 			mnWidth, mnBarConf.height - 2 * mnBordW)
