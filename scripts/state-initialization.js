@@ -13,6 +13,7 @@ const state = (function(){
 		skeletonPos:{ x: 1000, y: 380 },
 		skeletonFrameNumber: 0,
 		skeletonAnimation: 'walk',
+		skeletonHealth: 100,
 		bulletPos:{ x: 1000, y: 390 },
 		bulletFrameNumber: 0,
 		bulletAnimation: 'fire'

@@ -20,7 +20,8 @@ const render = (function(){
 
 		context.fillStyle = hpBarConf.healthColor
 
-		const hpWidth = (hpBarConf.width - 2 * hpBordW) * (state.health / 100)
+		const health = Math.max(0, Math.min(state.health, 100))
+		const hpWidth = (hpBarConf.width - 2 * hpBordW) * (health / 100)
 
 		context.fillRect(hpBarPos.x + hpBordW, hpBarPos.y + hpBordW,
 			hpWidth, hpBarConf.height - 2 * hpBordW)
@@ -127,7 +128,7 @@ const render = (function(){
 			state.playerPos.x-68, state.playerPos.y, 250, 196);
 		else context.drawImage(frame, 0, 0, frame.width, frame.height,
 			state.playerPos.x, state.playerPos.y, 175, 200);
-	}			
+	}
 
 	const enemy = {
 		walk: [],
@@ -167,6 +168,28 @@ const render = (function(){
 		const frame = new Image()
 		frame.src = `pictures/enemy/death/FW_Skeleton_Die__0${i < 10 ? '0' : ''}${i}.png`
 		enemy.death.push(frame)
+	}
+
+	const enemyHpWidth = 100
+	const enemyHpHeight = 8
+	const enemyHpBorderWidth = 1
+	const magicOffset = 40
+	function renderEnemyHealth(context, enemyX, enemyY) {
+		context.fillStyle = hpBarConf.borderColor
+
+		context.fillRect(enemyX, enemyY, enemyHpWidth, enemyHpHeight)
+
+		context.fillStyle = hpBarConf.backgroundColor
+
+		context.fillRect(enemyX + enemyHpBorderWidth, enemyY + enemyHpBorderWidth,
+			enemyHpWidth - 2 * enemyHpBorderWidth, enemyHpHeight - 2 * enemyHpBorderWidth)
+
+		context.fillStyle = hpBarConf.healthColor
+		const health = Math.max(0, Math.min(state.skeletonHealth, 100))
+		const hpWidth = (enemyHpWidth - 2 * enemyHpBorderWidth) * (health / 100)
+
+		context.fillRect(enemyX + enemyHpBorderWidth, enemyY + enemyHpBorderWidth,
+			hpWidth, enemyHpHeight - 2 * enemyHpBorderWidth)
 	}
 
 	function renderEnemy(context) {
@@ -221,6 +244,7 @@ const render = (function(){
 		renderCharacter(context)
 		renderBullet(context)
 		renderEnemy(context)
+		renderEnemyHealth(context, state.skeletonPos.x + magicOffset, state.skeletonPos.y)
 		renderScore(context, 30)
 		renderHealth(context)
 		renderMana(context)
