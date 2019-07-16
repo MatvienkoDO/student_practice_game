@@ -4,6 +4,7 @@ const stateChangers = (function(){
 	const playerMaxSpeedLeft = -300
 	const skeletonDamage = constants.isDev ? 10 : 10
 	const bulletDamage = 5
+	const manaSpendLight = 3
 	const manaSpend = 15
 	const pointPerEnemy = 100
 
@@ -78,13 +79,15 @@ const stateChangers = (function(){
 				state.characterAnimation = 'attackleft'
 			}
 			setTimeout(stateChangers.calmDownPlayer, 350)
-			stateChangers.createBullet(state.playerPos.x + 70, state.playerPos.y + 70, state.playerTurnedTo, attackType)
-			if (attackType == 2){
-				state.attackType = 2;
-				while (state.mana >= manaSpend) stateChangers.manaWaist()
+			if (attackType == 1 && state.mana > manaSpendLight){
+				state.attackType = 1
+				state.mana -= manaSpendLight
+				stateChangers.createBullet(state.playerPos.x + 70, state.playerPos.y + 70, state.playerTurnedTo, 1)
 			}
-			if (attackType == 1){
-				state.attackType = 1;
+			if (attackType == 2 && state.mana > manaSpend) {
+				state.attackType = 2
+				state.mana -= manaSpend
+				stateChangers.createBullet(state.playerPos.x + 70, state.playerPos.y + 70, state.playerTurnedTo, 2)
 			}
 		},
 		createBullet: (x, y, direction, colour) => {
