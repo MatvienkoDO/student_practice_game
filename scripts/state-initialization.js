@@ -14,8 +14,8 @@ const state = (function(){
 		skeletonFrameNumber: 0,
 		skeletonAnimation: 'walk',
 		skeletonHealth: 100,
-		bulletPos:{ x: 1000, y: 390 },
 		bulletFrameNumber: 0,
-		bulletAnimation: 'fire'
+		bulletAnimation: 'water',
+		bullets: []
 	}
 })()
