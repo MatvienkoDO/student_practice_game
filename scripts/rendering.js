@@ -225,8 +225,8 @@ const render = (function(){
 			enemyHpWidth - 2 * enemyHpBorderWidth, enemyHpHeight - 2 * enemyHpBorderWidth)
 
 		context.fillStyle = hpBarConf.healthColor
-		const health = Math.max(0, Math.min(state.skeletonHealth, 60))
-		const hpWidth = (enemyHpWidth - 2 * enemyHpBorderWidth) * (health / 60)
+		const health = Math.max(0, Math.min(state.skeletonHealth, 100))
+		const hpWidth = (enemyHpWidth - 2 * enemyHpBorderWidth) * (health / 100)
 
 		context.fillRect(enemyX + enemyHpBorderWidth, enemyY + enemyHpBorderWidth,
 			hpWidth, enemyHpHeight - 2 * enemyHpBorderWidth)
@@ -242,8 +242,8 @@ const render = (function(){
 			enemyHpWidth - 2 * enemyHpBorderWidth, enemyHpHeight - 2 * enemyHpBorderWidth)
 
 		context.fillStyle = hpBarConf.healthColor
-		const health = Math.max(0, Math.min(state.skeleton1Health, 60))
-		const hpWidth = (enemyHpWidth - 2 * enemyHpBorderWidth) * (health / 60)
+		const health = Math.max(0, Math.min(state.skeleton1Health, 100))
+		const hpWidth = (enemyHpWidth - 2 * enemyHpBorderWidth) * (health / 100)
 
 		context.fillRect(enemyX + enemyHpBorderWidth, enemyY + enemyHpBorderWidth,
 			hpWidth, enemyHpHeight - 2 * enemyHpBorderWidth)
