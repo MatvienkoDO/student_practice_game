@@ -2,7 +2,9 @@ const stateChangers = (function(){
 	const highBoundary = 1000
 	const playerMaxSpeedRight = 300
 	const playerMaxSpeedLeft = -300
-	const skeletonDamage = constants.isDev ? 25 : 5;
+	const skeletonDamage = constants.isDev ? 25 : 5
+	const bulletDamage = 15
+	const manaSpend = 15
 
 	return {
 		startGame: (playerName) => {
@@ -15,15 +17,16 @@ const stateChangers = (function(){
 			state.playerSpeed = 0;
 			state.playerTurnedTo = 'right'
 			state.skeletonHealth = 100
-		},
-		endGame: () =>{
-
+			state.bullets = []
 		},
 		changePlayerFrame: () => {
 			state.characterFrameNumber = (state.characterFrameNumber + 1) % highBoundary
 		},
 		changeEnemyFrame: () => {
 			state.skeletonFrameNumber = (state.skeletonFrameNumber + 1) % highBoundary
+		},
+		changeBulletFrame: () => {
+			state.bulletFrameNumber = (state.bulletFrameNumber + 1) % highBoundary
 		},
 		playerMovement: diff => {
 			state.playerPos.x = Math.max(0, Math.min(state.playerPos.x + diff * state.playerSpeed, 1180))
@@ -37,7 +40,7 @@ const stateChangers = (function(){
 				if(state.playerTurnedTo === 'right') state.characterAnimation = 'run'
 				else if(state.playerTurnedTo === 'left') state.characterAnimation = 'runleft'
 			}
-	},
+		},
 		movePlayerRight: () => {
 			state.playerSpeed = Math.min(
 				playerMaxSpeedRight,
@@ -61,15 +64,57 @@ const stateChangers = (function(){
 				state.characterAnimation = 'idleleft'
 			}
 		},
-		playerAttack: () => {
+		playerAttack: (i) => {
 			state.characterAnimation = 'attack'
 			if(state.playerTurnedTo === 'left'){
 				state.characterAnimation = 'attackleft'
 			}
-			setTimeout(stateChangers.calmDownPlayer,700)
+			setTimeout(stateChangers.calmDownPlayer,350)
+			stateChangers.createBullet(state.playerPos.x + 70, state.playerPos.y + 70, state.playerTurnedTo)
+			if (i==2){
+				stateChangers.manaWaist()
+				state.bulletAnimation = 'fire'
+			}
 		},
+		createBullet: (x, y, direction) => {
+			state.bullets.push({
+				x,
+				y,
+				direction // 'right' of 'left'
+			})
+		},
+		handleBullets: (diff) => {
+			const bulletSpeed = 400 // todo: adjust it later
+			const radius = 90
+
+			const bullets = state.bullets
+			.map(bullet => {
+				bullet.x += bulletSpeed * diff * (bullet.direction === 'right' ? 1 : -1)
+				if (bullet.direction === 'left') state.bulletAnimation = 'waterleft'
+				if (bullet.direction === 'right') state.bulletAnimation = 'water'
+				return bullet
+			})
+			.filter(bullet =>
+				bullet.x > 0 &&
+				bullet.x < constants.canvas.width &&
+				bullet.y > 0 &&
+				bullet.y < constants.canvas.height
+			)
+
+			state.bullets = bullets
+
+			bullets.forEach(b => {
+				const {x, y} = state.skeletonPos
+				const dx = x - b.x
+				const dy = y - b.y
+				const distance = Math.sqrt(dx * dx + dy * dy)
+				if(distance < radius) {
+					state.skeletonHealth -= bulletDamage
+				}
+			})
+		},		
 		skeletonMovement: (diff) => {
-			if(state.skeletonPos.x > state.playerPos.x){
+			if(state.skeletonPos.x > state.playerPos.x && state.skeletonHealth > 0){
 				state.skeletonPos.x -= 1;
 
 				if(state.skeletonAnimation === 'attack') {
@@ -82,7 +127,7 @@ const stateChangers = (function(){
 					state.skeletonAnimation = 'walk'
 				}
 			}
-			if(state.skeletonPos.x < state.playerPos.x){
+			if(state.skeletonPos.x < state.playerPos.x  && state.skeletonHealth > 0){
 				state.skeletonPos.x += 1;
 
 				if(state.skeletonAnimation === 'walk') {
@@ -115,7 +160,22 @@ const stateChangers = (function(){
 			if(state.health <= 0){
 				state.characterAnimation = 'death'
 				if(state.playerTurnedTo === 'left') state.characterAnimation = 'deathleft'
-				setTimeout(endGame(),1850)
 			}
+		},
+		skeletonDeath: () =>{
+			if(state.skeletonHealth <= 0){
+				if(state.skeletonAnimation === 'walk') state.skeletonAnimation = 'death'
+				if(state.skeletonAnimation === 'walkright') state.skeletonAnimation = 'deathright'
+				setTimeout(stateChangers.skeletonRegeneration, 550)
+			}
+		},
+		skeletonRegeneration:() =>{
+			state.skeletonHealth = 100
+			state.skeletonAnimation = 'walk'
+			state.skeletonPos = { x: 1000, y: 380 }
+		},
+		manaWaist: () =>{
+			state.mana -= manaSpend
 		}
+	}
 })()
