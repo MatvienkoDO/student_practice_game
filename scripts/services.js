@@ -1,20 +1,20 @@
 (function(){
 	setInterval(stateChangers.changePlayerFrame, 50)
-	setInterval(stateChangers.changeEnemyFrame, 55)
-	setInterval(stateChangers.changeEnemy1Frame, 55)
 	setInterval(stateChangers.changeBulletFrame, 100)
+	setInterval(() => {
+		stateChangers.changeEnemyFrame()
+		stateChangers.changeEnemy1Frame()
+	}, 55)
 
 	const movementInterval = 10
 	const movementCallback = () => {
 		stateChangers.playerMovement(movementInterval / 1000),
 		stateChangers.skeletonMovement()
 		stateChangers.skeleton1Movement()
-		
 	}
 	setInterval(movementCallback, movementInterval)
 
 	const combinedCallbacks = () => {
-
 		stateChangers.skeletonDamageDealing()
 		stateChangers.skeleton1DamageDealing()
 		stateChangers.healthRegeneration()
