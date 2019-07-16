@@ -20,7 +20,8 @@ const render = (function(){
 
 		context.fillStyle = hpBarConf.healthColor
 
-		const hpWidth = (hpBarConf.width - 2 * hpBordW) * (state.health / 100)
+		const health = Math.max(0, Math.min(state.health, 100))
+		const hpWidth = (hpBarConf.width - 2 * hpBordW) * (health / 100)
 
 		context.fillRect(hpBarPos.x + hpBordW, hpBarPos.y + hpBordW,
 			hpWidth, hpBarConf.height - 2 * hpBordW)
