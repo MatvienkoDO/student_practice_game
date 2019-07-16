@@ -42,7 +42,8 @@ const render = (function(){
 
 		context.fillStyle = mnBarConf.manaColor
 
-		const mnWidth = (mnBarConf.width - 2 * mnBordW) * (state.mana / 100)
+		const mana = Math.max(0, Math.min(state.mana, 100))
+		const mnWidth = (mnBarConf.width - 2 * mnBordW) * (mana / 100)
 
 		context.fillRect(mnBarPos.x + mnBordW, mnBarPos.y + mnBordW,
 			mnWidth, mnBarConf.height - 2 * mnBordW)
@@ -169,6 +170,45 @@ const render = (function(){
 		frame.src = `pictures/enemy/death/FW_Skeleton_Die__0${i < 10 ? '0' : ''}${i}.png`
 		enemy.death.push(frame)
 	}
+	const enemy1 = {
+		walk: [],
+		attack: [],
+		walkright: [],
+		attackright: [],
+		death: [],
+		deathright: []
+	}
+
+	for(let i = 4; i <= 23; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/enemy/walk/FW_Skeleton_Walking__0${i < 10 ? '0' : ''}${i}.png`
+		enemy1.walk.push(frame)
+	}
+	for(let i = 0; i <= 19; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/enemy/attack/FW_Skeleton_Attack__0${i < 10 ? '0' : ''}${i}.png`
+		enemy1.attack.push(frame)
+	}
+	for(let i = 4; i <= 23; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/enemyright/walkright/FW_Skeleton_Walking__0${i < 10 ? '0' : ''}${i}.png`
+		enemy1.walkright.push(frame)
+	}
+	for(let i = 0; i <= 19; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/enemyright/attackright/FW_Skeleton_Attack__0${i < 10 ? '0' : ''}${i}.png`
+		enemy1.attackright.push(frame)
+	}
+	for(let i = 0; i <= 19; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/enemyright/deathright/FW_Skeleton_Die__0${i < 10 ? '0' : ''}${i}.png`
+		enemy1.deathright.push(frame)
+	}
+	for(let i = 0; i <= 19; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/enemy/death/FW_Skeleton_Die__0${i < 10 ? '0' : ''}${i}.png`
+		enemy1.death.push(frame)
+	}
 
 	const enemyHpWidth = 100
 	const enemyHpHeight = 8
@@ -191,7 +231,23 @@ const render = (function(){
 		context.fillRect(enemyX + enemyHpBorderWidth, enemyY + enemyHpBorderWidth,
 			hpWidth, enemyHpHeight - 2 * enemyHpBorderWidth)
 	}
+	function renderEnemy1Health(context, enemyX, enemyY) {
+		context.fillStyle = hpBarConf.borderColor
 
+		context.fillRect(enemyX, enemyY, enemyHpWidth, enemyHpHeight)
+
+		context.fillStyle = hpBarConf.backgroundColor
+
+		context.fillRect(enemyX + enemyHpBorderWidth, enemyY + enemyHpBorderWidth,
+			enemyHpWidth - 2 * enemyHpBorderWidth, enemyHpHeight - 2 * enemyHpBorderWidth)
+
+		context.fillStyle = hpBarConf.healthColor
+		const health = Math.max(0, Math.min(state.skeleton1Health, 100))
+		const hpWidth = (enemyHpWidth - 2 * enemyHpBorderWidth) * (health / 100)
+
+		context.fillRect(enemyX + enemyHpBorderWidth, enemyY + enemyHpBorderWidth,
+			hpWidth, enemyHpHeight - 2 * enemyHpBorderWidth)
+	}
 	function renderEnemy(context) {
 		const frameNumber = state.skeletonFrameNumber % enemy[state.skeletonAnimation].length
 		const frame =  enemy[state.skeletonAnimation][frameNumber]
@@ -206,6 +262,21 @@ const render = (function(){
 			state.skeletonPos.x - 170, state.skeletonPos.y, 400, 230)
 		}else context.drawImage(frame, 0, 0, frame.width, frame.height,
 			state.skeletonPos.x, state.skeletonPos.y, 180, 230)
+	}
+	function renderEnemy1(context) {
+		const frameNumber = state.skeleton1FrameNumber % enemy1[state.skeleton1Animation].length
+		const frame =  enemy1[state.skeleton1Animation][frameNumber]
+
+		// todo: do some calculations and logic about position and size
+		if(state.skeleton1Animation === 'death'){
+			context.drawImage(frame, 0, 0, frame.width, frame.height,
+			state.skeleton1Pos.x, state.skeleton1Pos.y, 400, 230)
+		}
+		else if(state.skeleton1Animation === 'deathright'){
+			context.drawImage(frame, 0, 0, frame.width, frame.height,
+			state.skeleton1Pos.x - 170, state.skeleton1Pos.y, 400, 230)
+		}else context.drawImage(frame, 0, 0, frame.width, frame.height,
+			state.skeleton1Pos.x, state.skeleton1Pos.y, 180, 230)
 	}
 	const bullet = {
 		fire: [],
@@ -240,11 +311,16 @@ const render = (function(){
 
 	function renderBullets(context) {
 		state.bullets.forEach(bullet => {
-			renderBullet(context, bullet.x, bullet.y)
+			renderBullet(context, bullet.x, bullet.y, bullet.colour, bullet.direction)
 		})
 	}
 
-	function renderBullet(context, x, y) {
+	function renderBullet(context, x, y, colour, direction) {
+		if (colour === 1){
+			state.bulletAnimation = (direction === 'right' ? 'water' : 'waterleft')
+		} else if (colour === 2){
+			state.bulletAnimation = (direction === 'right' ? 'fire' : 'fireleft')
+		}
 		const frameNumber = state.bulletFrameNumber % bullet[state.bulletAnimation].length
 		const frame =  bullet[state.bulletAnimation][frameNumber]
 		// todo: do some calculations and logic about position and size
@@ -256,8 +332,10 @@ const render = (function(){
 		renderBackground(context)
 		renderCharacter(context)
 		renderEnemy(context)
+		renderEnemy1(context)
 		renderBullets(context)
 		renderEnemyHealth(context, state.skeletonPos.x + magicOffset, state.skeletonPos.y)
+		renderEnemy1Health(context, state.skeleton1Pos.x + magicOffset, state.skeleton1Pos.y)
 		renderScore(context, 30)
 		renderHealth(context)
 		renderMana(context)
