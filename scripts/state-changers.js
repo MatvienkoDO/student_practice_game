@@ -14,7 +14,8 @@ const stateChangers = (function(){
 			state.playerPos = { x: 10, y: 390 } // todo: temporary
 			state.playerSpeed = 0;
 			state.playerTurnedTo = 'right'
-			state.skeletonHealth = 100		},
+			state.skeletonHealth = 100
+		},
 		endGame: () =>{
 
 		},
