@@ -30,10 +30,10 @@
 			stateChangers.movePlayerLeft()
 		}
 		if(e.keyCode === constants.attackOneButton){
-			stateChangers.playerAttack()
+			stateChangers.playerAttack(1)
 		}
 		if(e.keyCode === constants.attackTwoButton){
-			stateChangers.playerAttack()
+			stateChangers.playerAttack(2)
 		}
 	})
 
@@ -42,7 +42,6 @@
 			stateChangers.slowDownPlayer()
 		}
 	})
-
 	/*
   function playerMovement(e){
 	switch(e.keyCode){

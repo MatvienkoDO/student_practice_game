@@ -197,7 +197,14 @@ const render = (function(){
 		const frame =  enemy[state.skeletonAnimation][frameNumber]
 
 		// todo: do some calculations and logic about position and size
-		context.drawImage(frame, 0, 0, frame.width, frame.height,
+		if(state.skeletonAnimation === 'death'){
+			context.drawImage(frame, 0, 0, frame.width, frame.height,
+			state.skeletonPos.x, state.skeletonPos.y, 400, 230)
+		}
+		else if(state.skeletonAnimation === 'deathright'){
+			context.drawImage(frame, 0, 0, frame.width, frame.height,
+			state.skeletonPos.x - 170, state.skeletonPos.y, 400, 230)
+		}else context.drawImage(frame, 0, 0, frame.width, frame.height,
 			state.skeletonPos.x, state.skeletonPos.y, 180, 230)
 	}
 	const bullet = {
@@ -222,28 +229,34 @@ const render = (function(){
 	for(let i = 1; i <= 8; ++i) {
 		const frame = new Image()
 		frame.src = `pictures/effectsleft/water/water${i}.png`
-		bullet.water.push(frame)
+		bullet.waterleft.push(frame)
 	}
 
 	for(let i = 1; i <= 8; ++i) {
 		const frame = new Image()
 		frame.src = `pictures/effectsleft/fire/fire${i}.png`
-		bullet.fire.push(frame)
+		bullet.fireleft.push(frame)
 	}
 
-	function renderBullet(context) {
+	function renderBullets(context) {
+		state.bullets.forEach(bullet => {
+			renderBullet(context, bullet.x, bullet.y)
+		})
+	}
+
+	function renderBullet(context, x, y) {
 		const frameNumber = state.bulletFrameNumber % bullet[state.bulletAnimation].length
 		const frame =  bullet[state.bulletAnimation][frameNumber]
 		// todo: do some calculations and logic about position and size
 		context.drawImage(frame, 0, 0, frame.width, frame.height,
-			state.bulletPos.x, state.bulletPos.y, 70, 70)
+			x, y, 70, 70)
 	}
 
 	return function(diff, context) {
 		renderBackground(context)
 		renderCharacter(context)
-		renderBullet(context)
 		renderEnemy(context)
+		renderBullets(context)
 		renderEnemyHealth(context, state.skeletonPos.x + magicOffset, state.skeletonPos.y)
 		renderScore(context, 30)
 		renderHealth(context)
