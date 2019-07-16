@@ -77,13 +77,13 @@ const stateChangers = (function(){
 			if(state.playerTurnedTo === 'left'){
 				state.characterAnimation = 'attackleft'
 			}
-			setTimeout(stateChangers.calmDownPlayer,350)
+			setTimeout(stateChangers.calmDownPlayer, 350)
 			stateChangers.createBullet(state.playerPos.x + 70, state.playerPos.y + 70, state.playerTurnedTo, attackType)
-			if (attackType==2){
+			if (attackType == 2){
 				state.attackType = 2;
 				while (state.mana >= manaSpend) stateChangers.manaWaist()
 			}
-			if (attackType==1){
+			if (attackType == 1){
 				state.attackType = 1;
 			}
 		},
@@ -132,7 +132,7 @@ const stateChangers = (function(){
 					state.skeleton1Health -= bulletDamage
 				}
 			})
-		},		
+		},
 		skeletonMovement: (diff) => {
 			if(state.skeletonPos.x > state.playerPos.x && state.skeletonHealth > 0){
 				state.skeletonPos.x -= 1;
