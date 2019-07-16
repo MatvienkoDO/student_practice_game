@@ -2,6 +2,7 @@ const stateChangers = (function(){
 	const highBoundary = 1000
 	const playerMaxSpeedRight = 300
 	const playerMaxSpeedLeft = -300
+	const skeletonDamage = constants.isDev ? 25 : 5;
 
 	return {
 		startGame: (playerName) => {
@@ -12,7 +13,10 @@ const stateChangers = (function(){
 			state.startTime = new Date()
 			state.playerPos = { x: 10, y: 390 } // todo: temporary
 			state.playerSpeed = 0;
-			state.skeletonHealth = 100
+			state.playerTurnedTo = 'right'
+			state.skeletonHealth = 100		},
+		endGame: () =>{
+
 		},
 		changePlayerFrame: () => {
 			state.characterFrameNumber = (state.characterFrameNumber + 1) % highBoundary
@@ -63,7 +67,6 @@ const stateChangers = (function(){
 			}
 			setTimeout(stateChangers.calmDownPlayer,700)
 		},
-
 		skeletonMovement: (diff) => {
 			if(state.skeletonPos.x > state.playerPos.x){
 				state.skeletonPos.x -= 1;
@@ -99,14 +102,19 @@ const stateChangers = (function(){
 			}
 		},
 		skeletonDamageDealing: () =>{
-			if(state.skeletonPos.x === state.playerPos.x && state.health>0)state.health -= 5;
-
+			if(state.skeletonPos.x === state.playerPos.x && state.health>0)state.health -= skeletonDamage;
 		},
 		healthRegeneration: () => {
 			if(state.health < 100) state.health += 2;
 		},
 		manaRegeneration: () => {
 			if(state.mana < 100) state.mana += 5;
+		},
+		playerDeath: () =>{
+			if(state.health <= 0){
+				state.characterAnimation = 'death'
+				if(state.playerTurnedTo === 'left') state.characterAnimation = 'deathleft'
+				setTimeout(endGame(),1850)
+			}
 		}
-	}
 })()

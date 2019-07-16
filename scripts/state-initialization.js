@@ -7,6 +7,7 @@ const state = (function(){
 		startTime: null,
 		playerPos: { x: 10, y: 390 },
 		playerSpeed: 0,
+		playerTurnedTo: 'right',
 		characterFrameNumber: 0,
 		characterAnimation: 'idle',
 		skeletonPos:{ x: 1000, y: 380 },
