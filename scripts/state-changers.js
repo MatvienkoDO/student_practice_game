@@ -12,7 +12,7 @@ const stateChangers = (function(){
 			state.startTime = new Date()
 			state.playerPos = { x: 10, y: 390 } // todo: temporary
 			state.playerSpeed = 0;
-
+			state.skeletonHealth = 100
 		},
 		changePlayerFrame: () => {
 			state.characterFrameNumber = (state.characterFrameNumber + 1) % highBoundary
@@ -65,7 +65,7 @@ const stateChangers = (function(){
 		},
 
 		skeletonMovement: (diff) => {
-			if(state.skeletonPos.x > state.playerPos.x){ 
+			if(state.skeletonPos.x > state.playerPos.x){
 				state.skeletonPos.x -= 1;
 
 				if(state.skeletonAnimation === 'attack') {
@@ -78,7 +78,7 @@ const stateChangers = (function(){
 					state.skeletonAnimation = 'walk'
 				}
 			}
-			if(state.skeletonPos.x < state.playerPos.x){ 	
+			if(state.skeletonPos.x < state.playerPos.x){
 				state.skeletonPos.x += 1;
 
 				if(state.skeletonAnimation === 'walk') {
@@ -100,7 +100,7 @@ const stateChangers = (function(){
 		},
 		skeletonDamageDealing: () =>{
 			if(state.skeletonPos.x === state.playerPos.x && state.health>0)state.health -= 5;
-			
+
 		},
 		healthRegeneration: () => {
 			if(state.health < 100) state.health += 2;
