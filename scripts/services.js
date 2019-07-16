@@ -14,6 +14,7 @@
 		stateChangers.skeletonDamageDealing()
 		stateChangers.healthRegeneration()
 		stateChangers.manaRegeneration()
+		stateChangers.playerDeath()
 	}
 	setInterval(combinedCallbacks, 1000)
 })()

@@ -61,7 +61,9 @@ const render = (function(){
 		idleleft: [],
 		runleft: [],
 		attack: [],
-		attackleft: []
+		attackleft: [],
+		death: [],
+		deathleft: []
 	}
 
 	for(let i = 1; i <= 17; ++i) {
@@ -101,6 +103,18 @@ const render = (function(){
 		character.attackleft.push(frame)
 	}
 
+	for(let i = 3; i <= 39; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/character/death/death00${i < 10 ? '0' : ''}${i}.png`
+		character.death.push(frame)
+	}
+
+	for(let i = 3; i <= 39; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/characterleft/death/death00${i < 10 ? '0' : ''}${i}.png`
+		character.deathleft.push(frame)
+	}
+
 
 	function renderCharacter(context) {
 		const frameNumber = state.characterFrameNumber % character[state.characterAnimation].length
@@ -119,7 +133,9 @@ const render = (function(){
 		walk: [],
 		attack: [],
 		walkright: [],
-		attackright: []
+		attackright: [],
+		death: [],
+		deathright: []
 	}
 
 	for(let i = 4; i <= 23; ++i) {
@@ -134,13 +150,23 @@ const render = (function(){
 	}
 	for(let i = 4; i <= 23; ++i) {
 		const frame = new Image()
-		frame.src = `pictures/enemyleft/walkright/FW_Skeleton_Walking__0${i < 10 ? '0' : ''}${i}.png`
+		frame.src = `pictures/enemyright/walkright/FW_Skeleton_Walking__0${i < 10 ? '0' : ''}${i}.png`
 		enemy.walkright.push(frame)
 	}
 	for(let i = 0; i <= 19; ++i) {
 		const frame = new Image()
-		frame.src = `pictures/enemyleft/attackright/FW_Skeleton_Attack__0${i < 10 ? '0' : ''}${i}.png`
+		frame.src = `pictures/enemyright/attackright/FW_Skeleton_Attack__0${i < 10 ? '0' : ''}${i}.png`
 		enemy.attackright.push(frame)
+	}
+	for(let i = 0; i <= 19; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/enemyright/deathright/FW_Skeleton_Die__0${i < 10 ? '0' : ''}${i}.png`
+		enemy.deathright.push(frame)
+	}
+	for(let i = 0; i <= 19; ++i) {
+		const frame = new Image()
+		frame.src = `pictures/enemy/death/FW_Skeleton_Die__0${i < 10 ? '0' : ''}${i}.png`
+		enemy.death.push(frame)
 	}
 
 	function renderEnemy(context) {
